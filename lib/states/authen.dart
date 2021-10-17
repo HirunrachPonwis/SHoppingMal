@@ -20,22 +20,51 @@ class _AuthenState extends State<Authen> {
           children: [
             buildImage(size),
             buildAppName(),
+            buildUser(size),
           ],
         ),
       ),
     );
   }
 
+  Row buildUser(double size) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Container(
+          margin: EdgeInsets.only(top: 16),
+          width: size * 0.6,
+          child: TextFormField(
+            decoration: InputDecoration(
+              prefixIcon: Icon(
+                Icons.account_circle_outlined,
+                color: MyConstant.dark,
+              ),
+              enabledBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: MyConstant.dark),
+                borderRadius: BorderRadius.circular(30),
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: MyConstant.light),
+                borderRadius: BorderRadius.circular(30),
+              ),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
   Row buildAppName() {
     return Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              ShowTitle(
-                title: MyConstant.appName,
-                textStyle: MyConstant().h1Style(),
-              ),
-            ],
-          );
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        ShowTitle(
+          title: MyConstant.appName,
+          textStyle: MyConstant().h1Style(),
+        ),
+      ],
+    );
   }
 
   Row buildImage(double size) {
