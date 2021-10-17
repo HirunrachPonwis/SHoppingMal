@@ -11,22 +11,23 @@ class Authen extends StatefulWidget {
 }
 
 class _AuthenState extends State<Authen> {
-  
   bool statusRedEye = true;
   @override
   Widget build(BuildContext context) {
     double size = MediaQuery.of(context).size.width;
     return Scaffold(
       body: SafeArea(
-        child: ListView(
-          children: [
-            buildImage(size),
-            buildAppName(),
-            buildUser(size),
-            buildPassword(
-              size,
-            )
-          ],
+        child: GestureDetector(   //เมื่อเปิด คีย์บอร์อขขึนมาแล้ว click ตรงที่ว่างเปล่าคีย์บอร์ดจะทำการเก็บพับลงไป
+          onTap: () => FocusScope.of(context).requestFocus(FocusNode()),  
+          behavior: HitTestBehavior.opaque,
+          child: ListView(
+            children: [
+              buildImage(size),
+              buildAppName(),
+              buildUser(size),
+              buildPassword(size),
+            ],
+          ),
         ),
       ),
     );
@@ -72,6 +73,24 @@ class _AuthenState extends State<Authen> {
           child: TextFormField(
             obscureText: statusRedEye, //password to *
             decoration: InputDecoration(
+              suffixIcon: IconButton(
+                onPressed: () {
+                  setState(() {
+                    statusRedEye =
+                        !statusRedEye; //when click on RedEye จะโชว์รหัส และแมื่อกดอีกครั้งจะซ่อนรหัส
+                  });
+                },
+                icon: statusRedEye
+                    ? Icon(
+                        //การเขียน if else อย่างง่าย ถ้าเป็น true ทำหลัง ? ถ้าเป็น false ทำหลัง :
+                        Icons.remove_red_eye,
+                        color: MyConstant.dark,
+                      )
+                    : Icon(
+                        Icons.remove_red_eye_outlined,
+                        color: MyConstant.dark,
+                      ),
+              ),
               labelStyle: MyConstant().h3Style(),
               labelText: 'Password:',
               prefixIcon: Icon(
