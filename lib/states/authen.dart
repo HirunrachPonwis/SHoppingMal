@@ -45,7 +45,7 @@ class _AuthenState extends State<Authen> {
           child: ElevatedButton(
             style: MyConstant().myBottonStyle(),
             onPressed: () {},
-            child: Text('Login'),
+            child: Text('Login',style: MyConstant().h3Style(),),
           ),
         ),
       ],
