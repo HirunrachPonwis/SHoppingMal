@@ -1,6 +1,10 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:shoppingmallbydew/utility/my_constant.dart';
+import 'package:shoppingmallbydew/widgets/show_image.dart';
 import 'package:shoppingmallbydew/widgets/show_title.dart';
 
 class CreateAccount extends StatefulWidget {
@@ -12,6 +16,8 @@ class CreateAccount extends StatefulWidget {
 
 class _CreateAccountState extends State<CreateAccount> {
   String? typeUser;
+  File?
+      file; //มีโอกาสเป็นตัวแปลประเภทอื่น ให้ใส่เครื่องหมายคำถามไว้หลัง type ของข้อมูล
 
   Row buildName(double size) {
     return Row(
@@ -193,18 +199,61 @@ class _CreateAccountState extends State<CreateAccount> {
             buildUser(size),
             buildPassword(size),
             buildTitle('  รูปภาพ'),
-            buildSubTitle()
+            buildSubTitle(),
+            buildAvatar(size)
           ],
         ),
       ),
     );
   }
 
+  Future<Null> chooseImage(ImageSource source) async {
+    try {
+      // ignore: deprecated_member_use
+      var result = await ImagePicker().getImage(
+        source: source,
+        maxWidth: 800,
+        maxHeight: 800,
+      );
+      setState(() {
+        file = File(result!.path);
+      });
+    } catch (e) {}
+  }
+
+  Row buildAvatar(double size) {
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.end,
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        IconButton(
+          onPressed: () => chooseImage(ImageSource.camera),
+          icon: Icon(Icons.add_a_photo),
+          iconSize: 36,
+          color: MyConstant.dark,
+        ),
+        Container(
+          margin: EdgeInsets.symmetric(vertical: 16),
+          width: size * 0.5,
+          child: file == null
+              ? ShowImage(path: MyConstant.avatar)
+              : Image.file(file!), //file! การันตรีว่าไม่มีโอกาสเป็น Null
+        ),
+        IconButton(
+          onPressed: () => chooseImage(ImageSource.gallery),
+          icon: Icon(Icons.add_photo_alternate),
+          iconSize: 36,
+          color: MyConstant.dark,
+        ),
+      ],
+    );
+  }
+
   ShowTitle buildSubTitle() {
     return ShowTitle(
-            title: 'รูปภาพแสดงตัวตนของ User or default',
-            textStyle: MyConstant().h3Style(),
-          );
+      title: 'รูปภาพแสดงตัวตนของ User or default',
+      textStyle: MyConstant().h3Style(),
+    );
   }
 
   Row buildRadioBuyer(double size) {
