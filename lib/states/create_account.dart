@@ -5,6 +5,7 @@ import 'package:flutter/rendering.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:shoppingmallbydew/utility/my_constant.dart';
+import 'package:shoppingmallbydew/utility/my_dialog.dart';
 import 'package:shoppingmallbydew/widgets/show_image.dart';
 import 'package:shoppingmallbydew/widgets/show_title.dart';
 
@@ -17,23 +18,68 @@ class CreateAccount extends StatefulWidget {
 
 class _CreateAccountState extends State<CreateAccount> {
   String? typeUser;
-  File? file; //มีโอกาสเป็นตัวแปลประเภทอื่น ให้ใส่เครื่องหมายคำถามไว้หลัง type ของข้อมูล
+  File?
+      file; //มีโอกาสเป็นตัวแปลประเภทอื่น ให้ใส่เครื่องหมายคำถามไว้หลัง type ของข้อมูล
+  double? lat, lng;
 
   @override
   void initState() {
     super.initState();
-    findLatLng();
+    checkPermission();
   }
 
-  Future<Null> findLatLng() async {
+  Future<Null> checkPermission() async {
     bool locationService;
     LocationPermission locationPermission;
 
     locationService = await Geolocator.isLocationServiceEnabled();
     if (locationService) {
       print('Service Location open');
+
+      locationPermission = await Geolocator.checkPermission();
+      if (locationPermission == LocationPermission.denied) {
+        locationPermission = await Geolocator.requestPermission();
+        if (locationPermission == LocationPermission.deniedForever) {
+          MyDialog().alertLocationservice(
+              context, 'ไม่อนุญาติแชร์ตำแหน่ง', 'โปนดแชร์ตำแหน่งของคุณ');
+        } else {
+          //Find la ton
+          findLatLng();
+        }
+      } else {
+        if (locationPermission == LocationPermission.deniedForever) {
+          MyDialog().alertLocationservice(
+              context, 'ไม่อนุญาติแชร์ตำแหน่ง', 'โปรดแชร์ตำแหน่งของคุณ');
+        } else {
+          //find lat lon
+          findLatLng();
+        }
+      }
     } else {
       print('Service Location Close');
+      MyDialog().alertLocationservice(
+          context, 'Location Service is close ?', 'กรุณาเปิด Location Service');
+    }
+  }
+
+  Future<Null> findLatLng() async {
+    print('findLatLong ==> work');
+    Position? position = await findPosition();
+    setState(() {
+      lat = position!.latitude; // ! มั่นใจว่ามันไม่ null หรอก
+      lng = position.longitude;
+      print('lat = $lat, lng = $lng');
+    });
+  }
+
+  Future<Position?> findPosition() async {
+    //มีโอกาสเป็น null เลยใส่เครื่องหมายคำถาม
+    Position position;
+    try {
+      position = await Geolocator.getCurrentPosition();
+      return position;
+    } catch (e) {
+      return null;
     }
   }
 
