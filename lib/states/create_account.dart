@@ -264,12 +264,16 @@ class _CreateAccountState extends State<CreateAccount> {
             buildPassword(size),
             buildTitle('  รูปภาพ'),
             buildSubTitle(),
-            buildAvatar(size)
+            buildAvatar(size),
+            buildTitle('แสดงตำแหน่งของคุณ'),
+            buildMap(),
           ],
         ),
       ),
     );
   }
+
+  Text buildMap() => Text('Lat = $lat , Lng = $lng');
 
   Future<Null> chooseImage(ImageSource source) async {
     try {
