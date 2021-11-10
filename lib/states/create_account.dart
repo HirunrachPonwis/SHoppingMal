@@ -1,12 +1,13 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:shoppingmallbydew/utility/my_constant.dart';
 import 'package:shoppingmallbydew/utility/my_dialog.dart';
 import 'package:shoppingmallbydew/widgets/show_image.dart';
+import 'package:shoppingmallbydew/widgets/show_progress.dart';
 import 'package:shoppingmallbydew/widgets/show_title.dart';
 
 class CreateAccount extends StatefulWidget {
@@ -41,9 +42,9 @@ class _CreateAccountState extends State<CreateAccount> {
         locationPermission = await Geolocator.requestPermission();
         if (locationPermission == LocationPermission.deniedForever) {
           MyDialog().alertLocationservice(
-              context, 'ไม่อนุญาติแชร์ตำแหน่ง', 'โปนดแชร์ตำแหน่งของคุณ');
+              context, 'ไม่อนุญาติแชร์ตำแหน่ง', 'โปรดแชร์ตำแหน่งของคุณ');
         } else {
-          //Find la ton
+          //Find lat lon
           findLatLng();
         }
       } else {
@@ -242,7 +243,7 @@ class _CreateAccountState extends State<CreateAccount> {
     double size = MediaQuery.of(context).size.width;
     return Scaffold(
       appBar: AppBar(
-        title: Text('Create New Account'),
+        title: Text('Location'),
         backgroundColor: MyConstant.primary,
       ),
       body: GestureDetector(
@@ -251,20 +252,6 @@ class _CreateAccountState extends State<CreateAccount> {
         child: ListView(
           padding: EdgeInsets.all(16),
           children: [
-            buildTitle('  ข้อมูลทั่วไป : '),
-            buildName(size),
-            buildTitle('  ชนิดของ User : '),
-            buildRadioBuyer(size),
-            buildRadioSeller(size),
-            buildRadioRider(size),
-            buildTitle('  ข้อมูลพื้นฐาน : '),
-            buildAddress(size),
-            buildPhone(size),
-            buildUser(size),
-            buildPassword(size),
-            buildTitle('  รูปภาพ'),
-            buildSubTitle(),
-            buildAvatar(size),
             buildTitle('แสดงตำแหน่งของคุณ'),
             buildMap(),
           ],
@@ -273,7 +260,29 @@ class _CreateAccountState extends State<CreateAccount> {
     );
   }
 
-  Text buildMap() => Text('Lat = $lat , Lng = $lng');
+  Set<Marker> setMarker() => <Marker>[
+        Marker(
+          markerId: MarkerId('id'),
+          position: LatLng(lat!, lng!),
+          infoWindow: InfoWindow(title: 'คุณอยู่ที่นี่',snippet: 'Lat = $lat , lng = $lng')
+        )
+      ].toSet();
+
+  Widget buildMap() => Container(
+        width: double.infinity,
+        height: 300,
+        child: lat == null
+            ? ShowProgress()
+            : GoogleMap(
+                initialCameraPosition: CameraPosition(
+                  target: LatLng(lat!, lng!),
+                  zoom:
+                      17, //ยิ่งต้องการความละเอียดมากก็ซูมมาก ตย.ถ้ามองจากนอกโลกเห็นโลกกลมๆ ซูม1
+                ),
+                onMapCreated: (controller) {},
+                markers: setMarker(),
+              ),
+      );
 
   Future<Null> chooseImage(ImageSource source) async {
     try {

@@ -1,6 +1,5 @@
 //import 'dart:js';
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:shoppingmallbydew/utility/my_constant.dart';

@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "244363096513",
+    "project_id": "lowcostmms",
+    "storage_bucket": "lowcostmms.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:244363096513:android:fd1d80f4ed50754d71bf40",
+        "android_client_info": {
+          "package_name": "com.flutterthailand.shoppingmallbydew"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "244363096513-5lensr7ttb5itmvokd83vbb5ljt8us9u.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC5nR5-eCP7xfp5MBK5qUIPhgas4p2pkUY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "244363096513-5lensr7ttb5itmvokd83vbb5ljt8us9u.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

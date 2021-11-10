@@ -1,16 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:shoppingmallbydew/states/authen.dart';
-import 'package:shoppingmallbydew/states/buyer_service.dart';
+
 import 'package:shoppingmallbydew/states/create_account.dart';
 import 'package:shoppingmallbydew/states/rider_service.dart';
-import 'package:shoppingmallbydew/states/saler_service.dart';
+
 import 'package:shoppingmallbydew/utility/my_constant.dart';
 
 final Map<String, WidgetBuilder> map = {
   '/authen': (BuildContext context) => Authen(),
   '/createAccount': (BuildContext context) => CreateAccount(),
-  '/buyerService': (BuildContext context) => BuyerService(),
-  '/salerService': (BuildContext context) => SalerService(),
   '/riderService': (BuildContext context) => RiderService(),
 };
 

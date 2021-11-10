@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class MyConstant {
   //Geeneral
-  static String appName = 'Shopping Mall';
+  static String appName = 'Get current location';
 
   //Route
   static String routeAuthen = '/authen';
@@ -16,13 +16,14 @@ class MyConstant {
   static String image2 = 'images/image2.png';
   static String image3 = 'images/image3.png';
   static String image4 = 'images/image4.png';
+  static String image6 = 'images/image7.png';
    static String avatar = 'images/avatar.png';
 
 
   //color
-  static Color primary = Color(0xff81d4fa);
-  static Color dark = Color(0xff4ba3c7);
-  static Color light = Color(0xffb6ffff);
+  static Color primary = Color(0xff4fc3f7);
+  static Color dark = Color(0xff0093c4);
+  static Color light = Color(0xff8bf6ff);
 
   //Style
   TextStyle h1Style() => TextStyle(
@@ -38,7 +39,12 @@ class MyConstant {
   TextStyle h3Style() => TextStyle(
         fontSize: 14,
         color: dark,
-        fontWeight: FontWeight.normal,
+        fontWeight: FontWeight.w500,
+      );
+  TextStyle h4Style() => TextStyle(
+        fontSize: 14,
+        color: Colors.white,
+        fontWeight: FontWeight.w500,
       );
 
   ButtonStyle myBottonStyle() => ElevatedButton.styleFrom(

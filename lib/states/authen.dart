@@ -25,10 +25,8 @@ class _AuthenState extends State<Authen> {
             children: [
               buildImage(size),
               buildAppName(),
-              buildUser(size),
-              buildPassword(size),
+              buildCreateAccount(),
               buildLogin(size),
-              buildCreateAccount()
             ],
           ),
         ),
@@ -39,8 +37,8 @@ class _AuthenState extends State<Authen> {
   Row buildCreateAccount() {
     return Row(mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                ShowTitle(title:'Non Account ?', textStyle: MyConstant().h3Style(),),
-                TextButton(onPressed: ()=> Navigator.pushNamed(context, MyConstant.routeCreateAccount), child: Text('Create Account'),)
+                ShowTitle(title:'Are you ready ?', textStyle: MyConstant().h3Style(),),
+                //TextButton(onPressed: ()=> Navigator.pushNamed(context, MyConstant.routeCreateAccount), child: Text('Ready'),)
               ],
             );
   }
@@ -51,11 +49,11 @@ class _AuthenState extends State<Authen> {
       children: [
         Container(
           margin: EdgeInsets.symmetric(vertical:16), //กำหนดให้ปุ่ม login ห่างจากกล่องข้อความทั้งบนและล่าง
-          width: size * 0.6,
+          width: size * 0.2,
           child: ElevatedButton(
             style: MyConstant().myBottonStyle(),
-            onPressed: () {},
-            child: Text('Login',style: MyConstant().h3Style(),),
+            onPressed: () => Navigator.pushNamed(context, MyConstant.routeCreateAccount),
+            child: Text('start',style: MyConstant().h4Style(),),
           ),
         ),
       ],
@@ -158,8 +156,8 @@ class _AuthenState extends State<Authen> {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Container(
-          width: size * 0.6,
-          child: ShowImage(path: MyConstant.image2),
+          width: size * 1.0,
+          child: ShowImage(path: MyConstant.image6),
         ),
       ],
     );
